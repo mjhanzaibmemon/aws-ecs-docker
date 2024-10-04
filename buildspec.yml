@@ -12,9 +12,8 @@ phases:
       - echo Logging in to Amazon ECR...
       - aws --version
       - echo $AWS_DEFAULT_REGION
-      # Updated to use AWS ECR instead of public ECR
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 891377056386.dkr.ecr.us-east-1.amazonaws.com
-      - REPOSITORY_URI=891377056386.dkr.ecr.us-east-1.amazonaws.com/u1m9o8m2/aws_code_deploy
+      # Updated to use public ECR
+      - REPOSITORY_URI=public.ecr.aws/u1m9o8m2/aws_code_deploy
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
       - IMAGE_TAG=${COMMIT_HASH:-latest}
   build:
@@ -30,5 +29,6 @@ phases:
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo write definitions file...
       - printf '[{"name":"exp-code-pipeline","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+
 artifacts:
   files: imagedefinitions.json
