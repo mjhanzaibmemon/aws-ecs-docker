@@ -29,7 +29,6 @@ phases:
     commands:
       - echo "Build completed on `date`"
       - echo "Pushing Docker images to ECR..."
-      - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo "Writing definitions file..."
       - printf '[{"name":"exp-code-pipeline","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
