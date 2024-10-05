@@ -1,6 +1,20 @@
-FROM node:latest
-WORKDIR /app
-COPY . .
+# Base image
+FROM node:14
+
+# Working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and yarn.lock
+COPY package.json yarn.lock ./
+
+# Install dependencies
 RUN yarn install
-CMD ["node", "index.js"]
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose port 3000
 EXPOSE 3000
+
+# Command to start the app
+CMD ["node", "index.js"]
