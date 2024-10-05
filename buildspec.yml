@@ -29,7 +29,7 @@ phases:
     commands:
       - echo "Build completed on `date`"
       - echo "Pushing Docker images to ECR..."
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push public.ecr.aws/u1m9o8m2/ecs_code_deploy:latest
       - echo "Writing definitions file..."
       - printf '[{"name":"exp-code-pipeline","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
